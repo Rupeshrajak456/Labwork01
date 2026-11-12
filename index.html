@@ -1,0 +1,707 @@
+<!doctype html>
+<!--
+  DIGITAL HUMANITIES EXHIBITION
+  Rupesh Rajak, MA in Digital Humanities, IIT (ISM) Dhanbad, Session 2026-27.
+
+  Every file sits in one folder: index.html, README.md and the four screenshots (.png).
+  Upload them together to the root of a GitHub repository and turn on GitHub Pages.
+  Publishing steps are in README.md. No software or build step is needed.
+-->
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Digital humanities portfolio of Rupesh Rajak, MA in DH, IIT (ISM) Dhanbad: RAG extraction of Indian flora and fauna, Sanskrit stop words, a synthetic reading of The Magic Casket, and the Veritale skill for evidence-graded history.">
+    <meta name="author" content="Rupesh Rajak">
+    <title>Rupesh Rajak | Digital Humanities Portfolio</title>
+    <style>
+      :root {
+        --page-gutter: clamp(1rem, 4vw, 2rem);
+        --content-width: 1180px;
+        --ink: #18231f;
+        --muted: #52635b;
+        --paper: #f6f4ee;
+        --surface: #fffefa;
+        --line: #d8d8cf;
+        --green: #0d5b4f;
+        --green-deep: #073f37;
+        --gold: #c89b3c;
+        --focus: #bf4b0d;
+        --shadow: 0 18px 45px rgb(24 35 31 / 10%);
+        --tint: #e8f0eb;
+        --verified: #0d5b4f;
+        --disputed: #8a5d0f;
+        --legend: #7a3f86;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(90deg, transparent 0, transparent 24px, rgb(13 91 79 / 4%) 25px, transparent 26px) 0 0 / 100% 100%,
+          var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1rem, 0.2vw + 0.95rem, 1.125rem);
+        line-height: 1.65;
+        overflow-wrap: break-word;
+      }
+
+      a { color: var(--green); text-underline-offset: 0.16em; }
+      a:hover { color: var(--green-deep); }
+      a:focus-visible, summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 4px; }
+      img, picture, video, iframe, svg, canvas { max-width: 100%; }
+      img, video, svg, canvas { height: auto; }
+      iframe { width: 100%; border: 0; }
+
+      .skip-link {
+        position: absolute;
+        top: -5rem;
+        left: 1rem;
+        z-index: 10;
+        padding: 0.65rem 0.9rem;
+        color: #fff;
+        background: var(--green-deep);
+      }
+      .skip-link:focus { top: 1rem; }
+
+      .site-header {
+        color: #fff;
+        background: var(--green-deep);
+        border-bottom: 5px solid var(--gold);
+      }
+      .header-inner, .layout, .site-footer { width: min(100%, var(--content-width)); margin: 0 auto; }
+      .header-inner { padding: 1.25rem var(--page-gutter) 1.4rem; }
+      .eyebrow, .label {
+        margin: 0;
+        color: inherit;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.74rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        line-height: 1.25;
+        text-transform: uppercase;
+      }
+      .eyebrow { color: #e7d7aa; }
+      .wordmark { margin: 0.2rem 0 0; font-size: 1.05rem; }
+      .course-line { margin: 0.25rem 0 0; color: #d5e2dc; font-size: 0.92rem; }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+        gap: clamp(1.5rem, 5vw, 5rem);
+        padding: clamp(2rem, 6vw, 5.5rem) var(--page-gutter) 4rem;
+      }
+
+      .student-card {
+        align-self: start;
+        padding: 1.4rem;
+        background: var(--surface);
+        border-top: 5px solid var(--gold);
+        box-shadow: var(--shadow);
+      }
+      .student-card h2 { margin: 0 0 1rem; font-size: 1.25rem; }
+      .metadata { margin: 0; }
+      .metadata > div { padding: 0.75rem 0; border-top: 1px solid var(--line); }
+      .metadata > div:first-child { border-top: 0; }
+      .metadata dt { font-family: Arial, Helvetica, sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+      .metadata dd { margin: 0.16rem 0 0; font-size: 0.98rem; }
+
+      main { min-width: 0; container-type: inline-size; }
+      .hero { padding: 0 0 2.7rem; border-bottom: 1px solid var(--line); }
+      .project-kicker { color: var(--green); }
+      h1, h2, h3, h4 { color: var(--ink); line-height: 1.15; }
+      h1 { max-width: 17ch; margin: 0.55rem 0 1.25rem; font-size: clamp(2.4rem, 6vw, 5.4rem); letter-spacing: -0.045em; }
+      h2 { margin: 0; font-size: clamp(1.65rem, 3vw, 2.4rem); letter-spacing: -0.025em; }
+      h3 { margin: 0 0 0.45rem; font-size: 1.2rem; }
+      .abstract { max-width: 68ch; margin: 0; font-size: clamp(1.12rem, 2vw, 1.35rem); line-height: 1.6; }
+      .abstract strong { color: var(--green-deep); }
+
+      .content-section { padding: 3.2rem 0; border-bottom: 1px solid var(--line); }
+      .section-heading { display: flex; gap: 1rem; align-items: baseline; margin-bottom: 1.25rem; }
+      .section-number { color: var(--gold); font-family: Arial, Helvetica, sans-serif; font-size: 0.85rem; font-weight: 700; }
+      .content-section p, .content-section li { max-width: 72ch; }
+
+      .edit-callout { color: var(--green-deep); font-family: Arial, Helvetica, sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; }
+
+      .assignment-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(1rem, 3vw, 1.5rem); margin-top: 1.8rem; }
+      .assignment {
+        min-width: 0;
+        padding: clamp(1.3rem, 4vw, 2.1rem);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-left: 6px solid var(--green);
+      }
+      .assignment header { display: grid; grid-template-columns: auto 1fr; gap: 0.8rem 1rem; align-items: baseline; }
+      .assignment-index { color: var(--gold); font-family: Arial, Helvetica, sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; }
+      .assignment h3 { margin: 0; font-size: clamp(1.35rem, 2.5vw, 1.9rem); }
+      .assignment .assignment-abstract { margin: 1rem 0 0; font-size: 1.04rem; }
+      .assignment .assignment-abstract + .assignment-abstract { margin-top: 0.75rem; }
+
+      /* GitHub repository button and project website button, side by side. */
+      .assignment-repository { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 1.15rem 0 0; }
+      .repository-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        max-width: 100%;
+        padding: 0.55rem 0.8rem;
+        color: #fff;
+        background: var(--green);
+        border: 1px solid var(--green);
+        border-radius: 0.2rem;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.84rem;
+        font-weight: 700;
+        line-height: 1.25;
+        text-decoration: none;
+      }
+      .repository-link::after { content: "\2197"; font-size: 1rem; }
+      .repository-link:hover { color: #fff; background: var(--green-deep); border-color: var(--green-deep); }
+      .repository-link.website-link { color: var(--green); background: transparent; }
+      .repository-link.website-link:hover { color: #fff; background: var(--green-deep); border-color: var(--green-deep); }
+
+      .assignment-body { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+      .assignment-body > :last-child { margin-bottom: 0; }
+      .assignment-body h4 {
+        margin: 1.6rem 0 0.4rem;
+        color: var(--green-deep);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .contents-nav { margin-top: 2rem; padding: 1.15rem 1.25rem; background: var(--tint); border-left: 4px solid var(--gold); }
+      .contents-nav ul { display: grid; gap: 0.5rem; margin: 0.6rem 0 0; padding-left: 1.2rem; }
+      .contents-nav li { max-width: none; line-height: 1.45; }
+      .contents-nav .nav-number { font-family: Arial, Helvetica, sans-serif; font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+      .contents-nav .nav-site::after { content: " \2197"; }
+      .contents-nav[hidden] { display: none; }
+
+      figure { margin: 1.75rem 0; }
+      figure img { display: block; width: 100%; max-width: 900px; height: auto; border: 1px solid var(--line); }
+      figure a { display: block; max-width: 900px; }
+      figcaption { margin-top: 0.65rem; color: var(--muted); font-size: 0.9rem; }
+
+      /* Small data tables inside the assignment cards. */
+      .table-wrap { overflow-x: auto; margin: 1rem 0 1.25rem; }
+      .data-table { width: 100%; max-width: 640px; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; font-size: 0.9rem; }
+      .data-table caption { padding-bottom: 0.5rem; color: var(--muted); font-size: 0.85rem; text-align: left; }
+      .data-table th, .data-table td { padding: 0.5rem 0.65rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+      .data-table thead th { color: var(--green-deep); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; border-bottom: 2px solid var(--gold); }
+      .data-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+      .data-table tfoot td { font-weight: 700; border-bottom: 0; }
+
+      /* A simple vertical timeline for method steps. */
+      .work-steps { list-style: none; margin: 1rem 0 1.25rem; padding: 0 0 0 1.1rem; border-left: 2px solid var(--gold); }
+      .work-steps li { position: relative; padding: 0 0 0.75rem 0.6rem; }
+      .work-steps li:last-child { padding-bottom: 0; }
+      .work-steps li::before { content: ""; position: absolute; left: -1.53rem; top: 0.5em; width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--green); border: 2px solid var(--surface); }
+      .work-steps strong { font-family: Arial, Helvetica, sans-serif; font-size: 0.9rem; }
+
+      .example-line { margin: 1.25rem 0; padding: 1rem 1.2rem; background: var(--tint); border-left: 4px solid var(--gold); font-size: 1.05rem; }
+      .grade { display: inline-block; margin: 0 0.15rem; padding: 0.02rem 0.4rem; border: 1px solid currentColor; border-radius: 0.2rem; font-family: Arial, Helvetica, sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; line-height: 1.5; vertical-align: 0.12em; white-space: nowrap; }
+      .keep-together { white-space: nowrap; }
+      .grade.verified { color: var(--verified); }
+      .grade.disputed { color: var(--disputed); }
+      .grade.legend { color: var(--legend); }
+
+      code { font-size: 0.86em; }
+      .code-sample code { font-size: 1em; }
+      .code-sample { margin: 1rem 0 1.25rem; padding: 0.9rem 1rem; overflow-x: auto; background: var(--paper); border: 1px solid var(--line); font-size: 0.82rem; line-height: 1.5; }
+
+      details { margin-top: 1.5rem; padding: 1rem 1.2rem; background: var(--surface); border-left: 4px solid var(--gold); }
+      summary { cursor: pointer; color: var(--green-deep); font-family: Arial, Helvetica, sans-serif; font-weight: 700; }
+      details p { margin-bottom: 0; }
+
+      .sources-group h3 { margin: 2rem 0 0.25rem; font-size: 1.15rem; }
+      .sources-group:first-of-type h3 { margin-top: 0.5rem; }
+      .sources-note { color: var(--muted); font-size: 0.9rem; }
+      .citation-list { padding-left: 1.3rem; }
+      .citation-list li { margin: 0.65rem 0; }
+      .site-footer { padding: 2.25rem var(--page-gutter) 3rem; color: var(--muted); font-size: 0.88rem; }
+      .site-footer p { margin: 0; }
+
+      @media (min-width: 900px) {
+        .student-card { position: sticky; top: 1.25rem; }
+      }
+
+      @media (max-width: 860px) {
+        .layout { display: block; padding-top: 2rem; }
+        .student-card { margin-bottom: 2.5rem; }
+      }
+
+      /* Container queries keep assignment cards legible even when embedded in a narrow layout. */
+      @container (max-width: 34rem) {
+        .assignment header { grid-template-columns: 1fr; gap: 0.35rem; }
+        .contents-nav ul { gap: 0.6rem; }
+      }
+
+      @media (max-width: 480px) {
+        .section-heading { gap: 0.6rem; }
+        .assignment { border-left-width: 4px; }
+        .contents-nav { padding: 1rem; }
+        .data-table { font-size: 0.84rem; }
+        .data-table th, .data-table td { padding: 0.45rem 0.4rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #eef4ef;
+          --muted: #b5c3bc;
+          --paper: #101714;
+          --surface: #18221d;
+          --line: #415148;
+          --green: #81c8ae;
+          --green-deep: #c2ebd9;
+          --gold: #e5bd68;
+          --focus: #ffb26a;
+          --shadow: 0 18px 45px rgb(0 0 0 / 24%);
+          --tint: #16372e;
+          --verified: #81c8ae;
+          --disputed: #e5bd68;
+          --legend: #d7a4e0;
+        }
+        .site-header { color: #f5fff9; background: #062d28; }
+        .eyebrow { color: #f3d78c; }
+        .course-line { color: #d7e8df; }
+        .edit-callout, .abstract strong, summary { color: #b9eed8; }
+        .repository-link { color: #062d28; background: #9fd7bd; border-color: #9fd7bd; }
+        .repository-link:hover { color: #062d28; background: #c2ebd9; border-color: #c2ebd9; }
+        .repository-link.website-link { color: #9fd7bd; background: transparent; }
+        .repository-link.website-link:hover { color: #062d28; background: #c2ebd9; border-color: #c2ebd9; }
+      }
+
+      @media print {
+        .site-header { color: var(--ink); background: transparent; border: 0; }
+        .layout { display: block; padding: 1rem 0; }
+        .student-card { margin: 1rem 0 2rem; box-shadow: none; border: 1px solid var(--line); }
+        a { color: var(--ink); }
+        figure, .table-wrap { break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to project</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <p class="eyebrow">Digital Humanities Student Exhibition</p>
+        <p class="wordmark">IIT (ISM) Dhanbad &middot; Department of HSS</p>
+        <p class="course-line">MA in DH &middot; Session 2026&ndash;27</p>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="student-card" aria-labelledby="student-details-heading">
+        <h2 id="student-details-heading">Student details</h2>
+
+        <!-- Keep these six items in this order. -->
+        <dl class="metadata">
+          <div>
+            <dt>Name</dt>
+            <dd>Rupesh Rajak</dd>
+          </div>
+          <div>
+            <dt>Assignment</dt>
+            <dd>Digital Humanities</dd>
+          </div>
+          <div>
+            <dt>Session</dt>
+            <dd>2026-27</dd>
+          </div>
+          <div>
+            <dt>Course</dt>
+            <dd>MA in DH</dd>
+          </div>
+          <div>
+            <dt>Department</dt>
+            <dd>HSS</dd>
+          </div>
+          <div>
+            <dt>Institution</dt>
+            <dd>IIT (ISM) Dhanbad</dd>
+          </div>
+        </dl>
+      </aside>
+
+      <main id="main-content">
+        <section class="hero" aria-labelledby="portfolio-title">
+          <p class="label project-kicker">Student portfolio</p>
+          <h1 id="portfolio-title">Rupesh Rajak&rsquo;s Digital Humanities Portfolio</h1>
+          <p class="abstract"><strong>Portfolio introduction.</strong> I came to digital humanities from History, and the four projects in this portfolio share one question: what happens to evidence when a machine helps us read? Two of them work with Indian material, pulling the plants and animals out of five books on Indian nature and building a small, open list of Sanskrit stop words. The other two are about stories, one reading a 1920s detective story partly by hand and partly with a language model, and one writing a skill file that makes an AI agent label history as Verified, Disputed or Legend. Along the way I used Python, retrieval, large language models and simple charts, but I tried to keep every step visible so that a reader can check the counts and see where each method breaks. Each exhibition below gives a short abstract, a view of the work and its main numbers, and links to the live website and the GitHub repository.</p>
+
+          <nav class="contents-nav" aria-label="Assignments on this page">
+            <p class="label">On this page</p>
+            <ul>
+              <!-- This list is rebuilt from the assignment blocks when the page opens. It also works without JavaScript. -->
+              <li><a class="nav-number" href="#assignment-1">Assignment 01</a>: <a class="nav-site" href="https://rupeshrajak456.github.io/RAG-WORK/" target="_blank" rel="noopener noreferrer">Extraction of Indian Cultural Elements using Retrieval-Augmented Generation</a></li>
+              <li><a class="nav-number" href="#assignment-2">Assignment 02</a>: <a class="nav-site" href="https://rupeshrajak456.github.io/Sanskrit_stopwords/" target="_blank" rel="noopener noreferrer">Sanskrit Stop Words</a></li>
+              <li><a class="nav-number" href="#assignment-3">Assignment 03</a>: <a class="nav-site" href="https://rupeshrajak456.github.io/synthetic_work/" target="_blank" rel="noopener noreferrer">A synthetic reading of R. Austin Freeman&rsquo;s &ldquo;The Magic Casket&rdquo;</a></li>
+              <li><a class="nav-number" href="#assignment-4">Assignment 04</a>: <a class="nav-site" href="https://rupeshrajak456.github.io/skill-veritale/" target="_blank" rel="noopener noreferrer">Veritale: An Evidence-Graded Skill for Telling History as a Story with Large Language Models</a></li>
+            </ul>
+          </nav>
+        </section>
+
+        <!--
+          ASSIGNMENTS: each <article class="assignment"> is one exhibition.
+          data-site holds the live project website; the page uses it for the "On this page" list.
+          To add another, copy a whole <article> block. Numbering updates itself.
+        -->
+        <section class="content-section" aria-labelledby="assignments-heading">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">01</span>
+            <h2 id="assignments-heading">Assignments</h2>
+          </div>
+
+          <div class="assignment-list">
+
+            <!-- ============ ASSIGNMENT 01 ============ -->
+            <article class="assignment" id="assignment-1" aria-labelledby="assignment-1-title" data-site="https://rupeshrajak456.github.io/RAG-WORK/">
+              <header>
+                <span class="assignment-index">Assignment 01</span>
+                <h3 id="assignment-1-title">Extraction of Indian Cultural Elements using Retrieval-Augmented Generation</h3>
+              </header>
+              <p class="assignment-abstract"><strong>Abstract.</strong> Indian literature and natural-history writing are full of references to the country&rsquo;s plants and animals, but those references are scattered across long texts. This project uses Retrieval-Augmented Generation (RAG) to retrieve relevant passages from five books and extract flora and fauna mentions into a structured, category-wise schema.</p>
+              <p class="assignment-abstract">The pipeline produced 28 flora and 18 fauna entries across 5 texts. Coverage follows each book&rsquo;s genre: a botanical guide supplies most of the flora, and wildlife narratives supply most of the fauna. The analysis also exposes the limits of the current output: empty categories, spelling variants, and a few noisy or misclassified entries. These define the next steps of normalisation and evaluation.</p>
+              <p class="assignment-repository">
+                <a class="repository-link" href="https://github.com/Rupeshrajak456/RAG-WORK" target="_blank" rel="noopener noreferrer">View this project&rsquo;s GitHub repository</a>
+                <a class="repository-link website-link" href="https://rupeshrajak456.github.io/RAG-WORK/" target="_blank" rel="noopener noreferrer">Visit the project website</a>
+              </p>
+              <div class="assignment-body">
+                <p class="edit-callout">Visible assignment work</p>
+                <figure>
+                  <a href="https://rupeshrajak456.github.io/RAG-WORK/#analysis" target="_blank" rel="noopener noreferrer">
+                    <img src="rag-flora-fauna-analysis.png" width="1477" height="866" loading="lazy" alt="Analysis section of the RAG Flora and Fauna website. Four summary cards read: 5 texts analysed, 46 entries in category lists, 4 of 10 categories with entries, and 86% of flora from one book. Below, two bar charts show entries per book and entries per category, with six empty categories shown as striped bars.">
+                  </a>
+                  <figcaption>The Analysis section of the project website. The left chart counts entries per book; the right chart counts them per category, and the striped bars are categories where the pipeline found nothing.</figcaption>
+                </figure>
+                <p>The pipeline cleaned the five books, cut them into overlapping passages and stored each passage as a vector. For every category it ran a query such as &ldquo;trees and plants mentioned&rdquo;, and a language model then picked names out of the retrieved passages only, not from its own memory. The results went into a fixed schema of ten categories, five for flora and five for fauna, with a separate record of which book each name came from.</p>
+
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <caption>Entries per category, as extracted</caption>
+                    <thead>
+                      <tr><th scope="col">Category</th><th scope="col" class="num">Entries</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Flora: plants</td><td class="num">26</td></tr>
+                      <tr><td>Flora: trees</td><td class="num">2</td></tr>
+                      <tr><td>Fauna: mammals</td><td class="num">13</td></tr>
+                      <tr><td>Fauna: birds</td><td class="num">5</td></tr>
+                      <tr><td>Flowers, herbs, crops, reptiles, fish, insects</td><td class="num">0</td></tr>
+                    </tbody>
+                    <tfoot>
+                      <tr><td>Total</td><td class="num">46</td></tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <p>The mistakes turned out to be as interesting as the hits. Upupa and Epop, taken from the scientific name of the hoopoe, ended up under flora, and Tiger, tigers and Tigresses stayed as three separate entries. Garuda and the Todas are not species at all, yet a mythical bird and a Nilgiri community are exactly the kind of cultural element the project set out to find. The full, searchable list is on the <a href="https://rupeshrajak456.github.io/RAG-WORK/#list" target="_blank" rel="noopener noreferrer">project website</a>, and the data comes from <a href="https://rupeshrajak456.github.io/RAG-WORK/flora_fauna.py" target="_blank" rel="noopener noreferrer">flora_fauna.py</a>.</p>
+              </div>
+            </article>
+
+            <!-- ============ ASSIGNMENT 02 ============ -->
+            <article class="assignment" id="assignment-2" aria-labelledby="assignment-2-title" data-site="https://rupeshrajak456.github.io/Sanskrit_stopwords/">
+              <header>
+                <span class="assignment-index">Assignment 02</span>
+                <h3 id="assignment-2-title">Sanskrit Stop Words</h3>
+              </header>
+              <p class="assignment-abstract"><strong>Abstract.</strong> Stop words are very frequent words that carry little topical meaning, and most text-processing pipelines remove them before analysis. English has several well-known lists, but Sanskrit has few that are open, small and easy to inspect. This project, prepared for the Indic NLP exercise of the Monsoon Semester 2026, presents a hand-compiled list of 200 Sanskrit stop words in simplified Latin transliteration. The words are sorted into 15 grammatical categories and summarised in a table and two charts. Pronouns, demonstratives, quantifiers and adverbs make up most of the list, while categories such as articles and classifiers have no Sanskrit counterpart. The list is offered as a transparent starting point for preprocessing, teaching and later testing on real corpora.</p>
+              <p class="assignment-repository">
+                <a class="repository-link" href="https://github.com/Rupeshrajak456/Sanskrit_stopwords" target="_blank" rel="noopener noreferrer">View this project&rsquo;s GitHub repository</a>
+                <a class="repository-link website-link" href="https://rupeshrajak456.github.io/Sanskrit_stopwords/" target="_blank" rel="noopener noreferrer">Visit the project website</a>
+              </p>
+              <div class="assignment-body">
+                <p class="edit-callout">Visible assignment work</p>
+                <figure>
+                  <a href="https://rupeshrajak456.github.io/Sanskrit_stopwords/#analysis" target="_blank" rel="noopener noreferrer">
+                    <img src="sanskrit-stopwords-analysis.png" width="1586" height="874" loading="lazy" alt="Analysis table from the Sanskrit Stop Words website listing categories with word counts, shares and examples. Demonstratives lead with 35 words (17.5%), followed by personal pronouns and possessives with 26 (13.0%) and quantifiers and determiners with 22 (11.0%).">
+                  </a>
+                  <figcaption>The Analysis table on the project website. Every one of the 200 words sits in exactly one category, shown with its share of the list and a few examples.</figcaption>
+                </figure>
+                <p>I gathered the words by hand, checked them for duplicates with a short script (there were none) and saved them as <code>Sanskrit_stopwords.py</code> with the header the exercise asked for. The spelling is kept simple: long vowels are doubled (aa, ii, uu) and <em>sh</em> stands for both &#347; and &#7779;. That makes the list easy to type, though it does lose some detail.</p>
+
+                <pre class="code-sample"><code># 1. Sanskrit Stop Words
+# Language: Sanskrit
+Sanskrit_stopwords = ["aham", "vayam", "aavaam", "sah", "saa", "tat", ...]</code></pre>
+
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <caption>The six largest categories</caption>
+                    <thead>
+                      <tr><th scope="col">Category</th><th scope="col" class="num">Words</th><th scope="col" class="num">Share</th><th scope="col">Examples</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Demonstratives</td><td class="num">35</td><td class="num">17.5%</td><td><em>sah, saa, tat</em></td></tr>
+                      <tr><td>Personal pronouns and possessives</td><td class="num">26</td><td class="num">13.0%</td><td><em>aham, vayam, aavaam</em></td></tr>
+                      <tr><td>Quantifiers and determiners</td><td class="num">22</td><td class="num">11.0%</td><td><em>sarvah, sarve, sarvam</em></td></tr>
+                      <tr><td>Adverbs of time</td><td class="num">18</td><td class="num">9.0%</td><td><em>tadaa, yadaa, kadaa</em></td></tr>
+                      <tr><td>Adverbs of manner and reason</td><td class="num">15</td><td class="num">7.5%</td><td><em>yatah, tatah, atah</em></td></tr>
+                      <tr><td>Interrogatives</td><td class="num">13</td><td class="num">6.5%</td><td><em>kah, kaa, kim</em></td></tr>
+                      <tr><td>Nine other categories</td><td class="num">71</td><td class="num">35.5%</td><td><em>api, eva, tu, asti</em></td></tr>
+                    </tbody>
+                    <tfoot>
+                      <tr><td>Total</td><td class="num">200</td><td class="num">100%</td><td></td></tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <p>Pronoun-type words dominate because Sanskrit marks relations through case endings, so a single idea such as &ldquo;that&rdquo; turns up as many separate forms. Some categories that work for other languages stay empty here. Sanskrit has no articles or classifiers, and it has no true postpositions, since case endings and preverbs do that job. I came to see those empty rows as findings about the language rather than gaps in the list. The complete list can be copied or downloaded from the <a href="https://rupeshrajak456.github.io/Sanskrit_stopwords/#list" target="_blank" rel="noopener noreferrer">project website</a>.</p>
+              </div>
+            </article>
+
+            <!-- ============ ASSIGNMENT 03 ============ -->
+            <article class="assignment" id="assignment-3" aria-labelledby="assignment-3-title" data-site="https://rupeshrajak456.github.io/synthetic_work/">
+              <header>
+                <span class="assignment-index">Assignment 03</span>
+                <h3 id="assignment-3-title">A synthetic reading of R. Austin Freeman&rsquo;s &ldquo;The Magic Casket&rdquo;</h3>
+              </header>
+              <p class="assignment-abstract"><strong>Abstract.</strong> &ldquo;The Magic Casket&rdquo; (1927) is one of R. Austin Freeman&rsquo;s Dr Thorndyke stories, built around a cheap little casket that turns out to carry a hidden message. This project asks how Freeman uses material clues, concealment and deductive reasoning to turn that puzzling object into a source of knowledge. The claim under test is that the story moves from watching suspicious objects and events, through hidden evidence, to Thorndyke&rsquo;s final explanation.</p>
+              <p class="assignment-abstract">The work follows a synthetic reading method. I first read about a quarter of the text, one block from each of three equal parts, and used that sample to frame a hypothesis. A language model then extracted phrases from the full story of 9,122 words under four themes: investigation and observation, objects and material value, deception and concealment, and knowledge and revelation. After I had checked every phrase by hand, 131 verified phrases gave 154 matches, which I counted across 13 segments and four narrative stages.</p>
+              <p class="assignment-abstract">The themes arrive in roughly the order the claim predicts. On average, observation sits 37 per cent of the way through the story, objects at 49, concealment at 61 and revelation at 87. The claim holds, with three qualifications: the casket&rsquo;s share of the text stays steady while its description changes, concealment is named most fully at the moment it is undone, and the pearls are found before Thorndyke explains himself. A close reading through thing theory, detective-fiction theory and Orientalism adds one more point. The secret is decoded by an Englishman, while the Japanese people whose message it was stay outside the story&rsquo;s knowledge.</p>
+              <p class="assignment-repository">
+                <a class="repository-link" href="https://github.com/Rupeshrajak456/synthetic_work" target="_blank" rel="noopener noreferrer">View this project&rsquo;s GitHub repository</a>
+                <a class="repository-link website-link" href="https://rupeshrajak456.github.io/synthetic_work/" target="_blank" rel="noopener noreferrer">Visit the project website</a>
+              </p>
+              <div class="assignment-body">
+                <p class="edit-callout">Visible assignment work</p>
+                <figure>
+                  <a href="https://rupeshrajak456.github.io/synthetic_work/analysis.html" target="_blank" rel="noopener noreferrer">
+                    <img src="magic-casket-theme-density.png" width="1429" height="736" loading="lazy" alt="Line chart titled How does the density of each theme rise and fall, showing matches per 100 words for four themes across 13 story segments grouped into four stages. Investigation peaks at the opening, objects peak at about 2.0 in segment 8, and knowledge rises to about 1.5 in the final segment.">
+                  </a>
+                  <figcaption>Figure A2 from the Analysis page: matches per 100 words for each theme across the 13 segments, so long and short segments can be compared. The shaded bands are the four narrative stages.</figcaption>
+                </figure>
+
+                <h4>From a quarter of the text to an argument</h4>
+                <ol class="work-steps">
+                  <li><strong>Partial reading.</strong> Three blocks of 32 units, 2,169 of 9,122 words, about 24 per cent of the story.</li>
+                  <li><strong>Reflexive framing.</strong> Positionality, a research problem and theoretical lenses, all set before the full read.</li>
+                  <li><strong>Full corpus.</strong> The whole story, lightly normalised so that phrases could be matched.</li>
+                  <li><strong>Extraction prompt.</strong> Four themes, twelve sub-types and ten rules, with JSON as the only output.</li>
+                  <li><strong>Theme dictionary.</strong> 131 verified phrases saved as <code>Theme_JSON.py</code>.</li>
+                  <li><strong>Visualisation.</strong> Positions, densities, stage tests and narrative voice, drawn from 154 matches.</li>
+                  <li><strong>Interpretation.</strong> Evidence, thing theory, detective-fiction structure and Orientalism.</li>
+                </ol>
+
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <caption>Where each theme sits in the story, on average</caption>
+                    <thead>
+                      <tr><th scope="col">Theme</th><th scope="col" class="num">Average position</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Investigation and observation</td><td class="num">37%</td></tr>
+                      <tr><td>Objects and material value</td><td class="num">49%</td></tr>
+                      <tr><td>Deception and concealment</td><td class="num">61%</td></tr>
+                      <tr><td>Knowledge and revelation</td><td class="num">87%</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <p>The chart shows the shape of the plot quite clearly. Object language peaks at 2.03 matches per 100 words in segment 8, when Thorndyke sits down to examine the casket, and knowledge language climbs to 1.49 in the last segment. Segments 1 to 4 contain no language of concealment or knowledge at all. The site also has an <a href="https://rupeshrajak456.github.io/synthetic_work/reader.html" target="_blank" rel="noopener noreferrer">annotated text</a>, where every matched phrase can be read in its place in the story.</p>
+              </div>
+            </article>
+
+            <!-- ============ ASSIGNMENT 04 ============ -->
+            <article class="assignment" id="assignment-4" aria-labelledby="assignment-4-title" data-site="https://rupeshrajak456.github.io/skill-veritale/">
+              <header>
+                <span class="assignment-index">Assignment 04</span>
+                <h3 id="assignment-4-title">Veritale: An Evidence-Graded Skill for Telling History as a Story with Large Language Models</h3>
+              </header>
+              <p class="assignment-abstract"><strong>Abstract.</strong> Large language models are now everyday tools for learning and writing about history, and they are very good at telling stories. That strength is also a weakness. Asked about a famous event, a model will usually blend well-attested facts, open scholarly disputes and late legends into one smooth narrative, and the reader cannot see the joins.</p>
+              <p class="assignment-abstract">This project presents Veritale, a skill file that lets an AI agent turn historical events and dates into a timeline and a story while labelling every claim as Verified, Disputed or Legend. The skill is written in Markdown and follows the Agent Skills format. A short entry file, SKILL.md, directs the agent through six modules: intake, fact table, evidence grading, timeline, narrative, and an uncertainty note with a self-check. The agent opens each module only when it reaches that step.</p>
+              <p class="assignment-abstract">The design was tried out on two case studies with well-known source problems: the Norman Conquest of 1066 and Ashoka&rsquo;s Kalinga war of c. 261 BCE. Together they produced 35 graded claims, of which 18 were Verified, 9 Disputed and 8 Legend, and every factual claim in the two stories could be traced back to a row in the fact table. The modular layout meant the agent read between 51 and 60 per cent of the skill&rsquo;s text for a typical task, instead of all of it.</p>
+              <p class="assignment-abstract">The project argues that source criticism, one of the oldest habits of the historian&rsquo;s craft, can be written down as plain instructions that an AI agent can follow. It also sets out the limits of the approach, above all the agent&rsquo;s dependence on its own memory of the sources.</p>
+              <p class="assignment-repository">
+                <a class="repository-link" href="https://github.com/Rupeshrajak456/skill-veritale" target="_blank" rel="noopener noreferrer">View this project&rsquo;s GitHub repository</a>
+                <a class="repository-link website-link" href="https://rupeshrajak456.github.io/skill-veritale/" target="_blank" rel="noopener noreferrer">Visit the project website</a>
+              </p>
+              <div class="assignment-body">
+                <p class="edit-callout">Visible assignment work</p>
+                <p class="example-line">On 14 October 1066 King Harold died at Hastings <span class="grade verified">Verified</span>, perhaps struck by an arrow in the eye <span class="grade disputed">Disputed</span>, and his body was found by Edith <span class="keep-together">Swan-neck <span class="grade legend">Legend</span>.</span></p>
+                <p>That one sentence holds three kinds of evidence, and Veritale is built to keep them apart. The most useful rule turned out to be the smallest: split compound claims. It turned &ldquo;Harold died at Hastings from an arrow&rdquo; into two rows, his death (Verified) and the arrow (Disputed), so neither part had to borrow a label that was too strong or too weak.</p>
+                <figure>
+                  <a href="https://rupeshrajak456.github.io/skill-veritale/#visualisation" target="_blank" rel="noopener noreferrer">
+                    <img src="veritale-graded-timeline.png" width="1484" height="869" loading="lazy" alt="Graded timeline view from the Veritale website for Hastings 1066. Filters show 9 Verified, 5 Disputed and 4 Legend claims. Timeline rows include Harold swearing an oath to support William's claim, marked Disputed, and Edward the Confessor dying without a son, marked Verified.">
+                  </a>
+                  <figcaption>The Graded timeline on the project website for Hastings, 1066. Each event carries its label, and its code (H1, H2 and so on) links it back to a row in the fact table.</figcaption>
+                </figure>
+
+                <div class="table-wrap">
+                  <table class="data-table">
+                    <caption>Graded claims in the two case studies</caption>
+                    <thead>
+                      <tr><th scope="col">Case study</th><th scope="col" class="num">Verified</th><th scope="col" class="num">Disputed</th><th scope="col" class="num">Legend</th><th scope="col" class="num">Total</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>Hastings, 1066</td><td class="num">9</td><td class="num">5</td><td class="num">4</td><td class="num">18</td></tr>
+                      <tr><td>Kalinga war, c. 261 BCE</td><td class="num">9</td><td class="num">4</td><td class="num">4</td><td class="num">17</td></tr>
+                    </tbody>
+                    <tfoot>
+                      <tr><td>Both cases</td><td class="num">18</td><td class="num">9</td><td class="num">8</td><td class="num">35</td></tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                <p>The whole skill runs to 5,452 words across eight files, but SKILL.md itself is only 759 words. A full run reads 3,275 words, about 60 per cent of the total, and a timeline-only run reads 51 per cent, because the long worked examples are opened only when the agent needs them. You can step through the skill in the <a href="https://rupeshrajak456.github.io/skill-veritale/#demo" target="_blank" rel="noopener noreferrer">live demonstration</a> or download <a href="https://rupeshrajak456.github.io/skill-veritale/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md</a> and try it with your own history question.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section" aria-labelledby="reflection-heading">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">02</span>
+            <h2 id="reflection-heading">Portfolio reflection</h2>
+          </div>
+          <p>Looking at the four projects side by side, the clearest thing I learned is that the machine is rarely the hard part. Retrieval, extraction and counting all ran without much trouble. What took real thought was deciding what counts as a plant, a stop word, a clue or a legend, and those decisions shaped the results more than any model did. The empty flora categories in the RAG project and the empty classifier row in the Sanskrit list taught me the same thing from two directions: a category scheme is a guess about the material, and its gaps are often worth reading as findings.</p>
+          <p>The second thread is evidence. In the Magic Casket project I checked every phrase the language model returned against the story before I counted it. In Veritale I wrote that habit into the instructions themselves, so that each claim in the story points back to a row in a fact table. My training in History made this feel familiar. Asking where a claim comes from, and who else supports it, turned out to be just as useful for checking a model&rsquo;s output as for reading a medieval chronicle.</p>
+          <p>Interpretation never came for free, either. The charts in all four projects show patterns, but each pattern still needed a close reading to say what it meant. A peak of object words in segment 8 only makes sense once you know that this is where Thorndyke sits down to examine the casket. Numbers pointed me where to look, and then I had to read.</p>
+          <p>Finally, putting each project on a public website changed the way I wrote. A chart on a web page needs a caption that a stranger can follow, and a limitations section has to be honest when anyone can open the repository and check the data. I tried to keep the language plain, to show the numbers along with their flaws, and to share the code and data next to the argument. That habit of openness is what I most want to carry into future digital humanities work.</p>
+          <details>
+            <summary>Methods Note</summary>
+            <p>All four projects followed roughly the same cycle. I collected and cleaned the material, designed a set of categories, extracted or compiled the data, checked it by hand, counted it in Python and then published the result as a website on GitHub Pages, with the code and data in a public repository.</p>
+            <p>The tools changed from project to project. The RAG project used text chunking, embeddings, a vector index for similarity search and a language model that was allowed to read only the retrieved passages. The stop-word list was compiled by hand, with Python scripts for duplicate checks and charts. The Magic Casket extraction used a general-purpose chat model guided by a JSON-only prompt, followed by phrase matching and simple statistics in Python. Veritale is plain Markdown in the Agent Skills format. The websites themselves are hand-written HTML, CSS and JavaScript.</p>
+            <p>A few decisions are worth recording. I kept the Sanskrit transliteration simple so the list is easy to use, and noted what that costs. In the Magic Casket project I read a quarter of the story before any machine reading, so that the hypothesis came from my own reading first. In Veritale I chose three labels rather than a finer scale, because a school pupil should be able to follow them.</p>
+            <p>On ethics, none of the projects uses personal data. The RAG website shares only the extracted names, not passages from the books. &ldquo;The Magic Casket&rdquo; is in the public domain in India and the United States, and the Sanskrit list is released under CC BY-NC 4.0. Each site states its limits openly: there is no gold standard for the RAG output yet, the stop words have not been tested on a corpus, the casket extraction relied on a hosted model, and Veritale depends on the model&rsquo;s memory of its sources. I also tried to stay alert to bias, from the Orientalist framing in Freeman&rsquo;s story to the risk that oral traditions get pushed too quickly into the Legend label.</p>
+          </details>
+        </section>
+
+        <section class="content-section" aria-labelledby="sources-heading">
+          <div class="section-heading">
+            <span class="section-number" aria-hidden="true">03</span>
+            <h2 id="sources-heading">Sources and acknowledgements</h2>
+          </div>
+
+          <div class="sources-group">
+            <h3>Assignment 01: RAG extraction of flora and fauna</h3>
+            <p class="sources-note">For the five books, the year given is that of the first edition.</p>
+            <ul class="citation-list">
+              <li>Ali, Salim. <em>The Book of Indian Birds.</em> Bombay Natural History Society, 1941.</li>
+              <li>Cowen, D. V. <em>Flowering Trees and Shrubs in India.</em> Thacker and Co., 1950.</li>
+              <li>Lenin, Janaki. <em>My Husband and Other Animals.</em> Westland, 2012.</li>
+              <li>Sinha, Neha. <em>Wild and Wilful: Tales of 15 Iconic Indian Species.</em> HarperCollins India, 2021.</li>
+              <li>Thapar, Valmik. <em>Tigers: The Secret Life.</em> Elm Tree Books, 1989.</li>
+              <li>Lewis, Patrick, Ethan Perez, Aleksandra Piktus, et al. &ldquo;Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.&rdquo; <em>Advances in Neural Information Processing Systems</em>, vol. 33, 2020.</li>
+            </ul>
+          </div>
+
+          <div class="sources-group">
+            <h3>Assignment 02: Sanskrit Stop Words</h3>
+            <ul class="citation-list">
+              <li>Luhn, H. P. &ldquo;The Automatic Creation of Literature Abstracts.&rdquo; <em>IBM Journal of Research and Development</em>, vol. 2, no. 2, 1958, pp. 159&ndash;165.</li>
+              <li>Manning, Christopher D., Prabhakar Raghavan and Hinrich Sch&uuml;tze. <em>Introduction to Information Retrieval.</em> Cambridge University Press, 2008.</li>
+              <li>Creative Commons. <em>Attribution-NonCommercial 4.0 International.</em> <a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener noreferrer">creativecommons.org/licenses/by-nc/4.0</a></li>
+            </ul>
+          </div>
+
+          <div class="sources-group">
+            <h3>Assignment 03: The Magic Casket</h3>
+            <ul class="citation-list">
+              <li>Freeman, R. Austin. &ldquo;The Magic Casket.&rdquo; In <em>The Magic Casket.</em> Hodder and Stoughton, 1927.</li>
+              <li>Brown, Bill. &ldquo;Thing Theory.&rdquo; <em>Critical Inquiry</em>, vol. 28, no. 1, 2001, pp. 1&ndash;22.</li>
+              <li>Ginzburg, Carlo. &ldquo;Clues: Roots of an Evidential Paradigm.&rdquo; In <em>Clues, Myths, and the Historical Method.</em> Johns Hopkins University Press, 1989.</li>
+              <li>Todorov, Tzvetan. &ldquo;The Typology of Detective Fiction.&rdquo; In <em>The Poetics of Prose.</em> Cornell University Press, 1977, pp. 42&ndash;52.</li>
+              <li>Said, Edward W. <em>Orientalism.</em> Pantheon, 1978.</li>
+              <li>Ramsay, Stephen. <em>Reading Machines: Toward an Algorithmic Criticism.</em> University of Illinois Press, 2011.</li>
+              <li>Ghosh, Sourav. <em>Wifes_Letter_JSON_themes</em> (GitHub repository), the partial-reading model this project follows. <a href="https://github.com/SouravGhosh-digital-humanities/Wifes_Letter_JSON_themes" target="_blank" rel="noopener noreferrer">github.com/SouravGhosh-digital-humanities/Wifes_Letter_JSON_themes</a></li>
+            </ul>
+          </div>
+
+          <div class="sources-group">
+            <h3>Assignment 04: Veritale</h3>
+            <ul class="citation-list">
+              <li>Anthropic. &ldquo;Equipping Agents for the Real World with Agent Skills.&rdquo; <em>Anthropic Engineering</em>, 16 October 2025. <a href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener noreferrer">anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills</a></li>
+              <li>Bloch, Marc. <em>The Historian&rsquo;s Craft.</em> Translated by Peter Putnam. Alfred A. Knopf, 1953.</li>
+              <li>Wineburg, Sam. <em>Historical Thinking and Other Unnatural Acts: Charting the Future of Teaching the Past.</em> Temple University Press, 2001.</li>
+              <li>Guyatt, Gordon H., et al. &ldquo;GRADE: An Emerging Consensus on Rating Quality of Evidence and Strength of Recommendations.&rdquo; <em>BMJ</em>, vol. 336, no. 7650, 2008, pp. 924&ndash;926.</li>
+              <li>Morillo, Stephen, editor. <em>The Battle of Hastings: Sources and Interpretations.</em> Boydell Press, 1996.</li>
+              <li>Thapar, Romila. <em>A&#347;oka and the Decline of the Mauryas.</em> Oxford University Press, 1961.</li>
+              <li>Nielsen, Jakob. &ldquo;Progressive Disclosure.&rdquo; Nielsen Norman Group, 3 December 2006. <a href="https://www.nngroup.com/articles/progressive-disclosure/" target="_blank" rel="noopener noreferrer">nngroup.com/articles/progressive-disclosure</a></li>
+            </ul>
+          </div>
+
+          <div class="sources-group">
+            <h3>Images, code, tools and thanks</h3>
+            <ul class="citation-list">
+              <li>All four images are screenshots of the project websites by Rupesh Rajak, 2026: <a href="https://rupeshrajak456.github.io/RAG-WORK/" target="_blank" rel="noopener noreferrer">RAG-WORK</a>, <a href="https://rupeshrajak456.github.io/Sanskrit_stopwords/" target="_blank" rel="noopener noreferrer">Sanskrit_stopwords</a>, <a href="https://rupeshrajak456.github.io/synthetic_work/" target="_blank" rel="noopener noreferrer">synthetic_work</a> and <a href="https://rupeshrajak456.github.io/skill-veritale/" target="_blank" rel="noopener noreferrer">skill-veritale</a>.</li>
+              <li>Code, data and skill files: <a href="https://github.com/Rupeshrajak456/RAG-WORK" target="_blank" rel="noopener noreferrer">RAG-WORK</a> (<code>flora_fauna.py</code>), <a href="https://github.com/Rupeshrajak456/Sanskrit_stopwords" target="_blank" rel="noopener noreferrer">Sanskrit_stopwords</a> (<code>Sanskrit_stopwords.py</code>), <a href="https://github.com/Rupeshrajak456/synthetic_work" target="_blank" rel="noopener noreferrer">synthetic_work</a> (<code>Theme_JSON.py</code>) and <a href="https://github.com/Rupeshrajak456/skill-veritale" target="_blank" rel="noopener noreferrer">skill-veritale</a> (<code>SKILL.md</code> and six modules, MIT License).</li>
+              <li>Tools: Python for cleaning, counting and charts; a retrieval-augmented generation pipeline with a vector index; general-purpose large language models for extraction; Markdown in the Agent Skills format; HTML, CSS and JavaScript; GitHub and GitHub Pages for hosting.</li>
+              <li>Page design: the Digital Humanities Student Exhibition template of the Department of Humanities and Social Sciences, IIT (ISM) Dhanbad.</li>
+              <li>My thanks to <a href="https://shanmugapriya.com/" target="_blank" rel="noopener noreferrer">Shanmugapriya T.</a> and <a href="https://linktr.ee/sourav.dh.litcult" target="_blank" rel="noopener noreferrer">Sourav Ghosh</a>, Department of Humanities and Social Sciences, IIT (ISM) Dhanbad, for supervising this work in the Monsoon Semester 2026.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="site-footer">
+      <p>Digital Humanities Student Exhibition &middot; Department of HSS &middot; IIT (ISM) Dhanbad</p>
+    </footer>
+    <script>
+      /*
+        Keeps the assignment labels and the "On this page" list in sync. Copy, delete or move an
+        .assignment block and this script renumbers everything when the page loads. Each list item
+        links "Assignment 0X" to its card and the title to the live project website (data-site).
+      */
+      (() => {
+        const assignments = [...document.querySelectorAll('.assignment')];
+        const contentsNav = document.querySelector('.contents-nav');
+        const contentsList = contentsNav?.querySelector('ul');
+
+        if (!assignments.length || !contentsList) {
+          if (contentsNav) contentsNav.hidden = true;
+          return;
+        }
+
+        const items = assignments.map((assignment, index) => {
+          const number = String(index + 1).padStart(2, '0');
+          const assignmentId = `assignment-${index + 1}`;
+          const heading = assignment.querySelector('h3');
+          const indexLabel = assignment.querySelector('.assignment-index');
+          const title = heading?.textContent.trim() || `Assignment ${number}`;
+          const site = assignment.dataset.site;
+
+          assignment.id = assignmentId;
+          if (heading) {
+            heading.id = `${assignmentId}-title`;
+            assignment.setAttribute('aria-labelledby', heading.id);
+          }
+          if (indexLabel) indexLabel.textContent = `Assignment ${number}`;
+
+          const item = document.createElement('li');
+          const numberLink = document.createElement('a');
+          numberLink.className = 'nav-number';
+          numberLink.href = `#${assignmentId}`;
+          numberLink.textContent = `Assignment ${number}`;
+          item.append(numberLink, ': ');
+
+          if (site) {
+            const siteLink = document.createElement('a');
+            siteLink.className = 'nav-site';
+            siteLink.href = site;
+            siteLink.target = '_blank';
+            siteLink.rel = 'noopener noreferrer';
+            siteLink.textContent = title;
+            item.append(siteLink);
+          } else {
+            item.append(title);
+          }
+          return item;
+        });
+
+        contentsList.replaceChildren(...items);
+      })();
+    </script>
+  </body>
+</html>
